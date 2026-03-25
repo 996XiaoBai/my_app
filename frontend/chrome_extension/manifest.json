@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "智能缺陷报告生成器",
+  "description": "输入口语化的 Bug 描述，AI 自动生成标准缺陷报告并一键提交到 TAPD",
+  "version": "1.0.0",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://dify.cvte.com/*",
+    "https://api.tapd.cn/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

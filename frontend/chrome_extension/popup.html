@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智能缺陷报告生成器</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- 顶部标题栏 -->
+    <header class="app-header">
+      <div class="header-content">
+        <span class="header-icon">🐞</span>
+        <h1>智能缺陷报告</h1>
+      </div>
+      <button id="btn-settings" class="btn-icon" title="设置">⚙️</button>
+    </header>
+
+    <!-- 状态提示条 -->
+    <div id="status-bar" class="status-bar hidden"></div>
+
+    <!-- 阶段一：输入区 -->
+    <section id="phase-input" class="phase">
+      <div class="form-row">
+        <div class="form-group half">
+          <label for="version">版本/迭代</label>
+          <input type="text" id="version" placeholder="V1.0.0">
+        </div>
+        <div class="form-group half">
+          <label for="submitter">提交人</label>
+          <input type="text" id="submitter" placeholder="你的名字">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>附件（图片/视频/文件）</label>
+        <div id="upload-area" class="upload-area">
+          <input type="file" id="file-input" multiple accept="image/*,video/*,.log,.txt,.pdf,.doc,.docx,.xls,.xlsx,.zip"
+            hidden>
+          <div class="upload-placeholder" id="upload-placeholder">
+            <span class="upload-icon">📎</span>
+            <span>点击或拖拽文件到此处上传</span>
+          </div>
+          <div id="file-list" class="file-list"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="bug-input">Bug 描述</label>
+        <textarea id="bug-input" rows="5"
+          placeholder="用大白话描述你发现的 Bug，例如：&#10;在登录页面输入错误密码后，点击登录按钮，页面没有提示错误信息，而是直接卡死了..."></textarea>
+      </div>
+
+      <button id="btn-generate" class="btn-primary">
+        <span class="btn-text">✨ AI 生成报告</span>
+        <span class="btn-loading hidden">
+          <span class="spinner"></span> 正在生成...
+        </span>
+      </button>
+    </section>
+
+    <!-- 阶段二：预览与编辑区 -->
+    <section id="phase-preview" class="phase hidden">
+      <div class="section-title">
+        <span>📝 缺陷详情预览</span>
+        <button id="btn-back" class="btn-text-link">← 重新输入</button>
+      </div>
+
+      <div class="form-group">
+        <label for="bug-title">标题</label>
+        <input type="text" id="bug-title" placeholder="【模块名】+ 简短操作 + 实际结果">
+      </div>
+
+      <div class="form-group">
+        <label for="bug-story">关联需求</label>
+        <input type="text" id="story-search" class="story-search" placeholder="🔍 输入关键字搜索需求...">
+        <div class="story-selector">
+          <select id="bug-story" size="4">
+            <option value="">-- 加载中... --</option>
+          </select>
+          <button id="btn-refresh-stories" class="btn-icon-sm" title="刷新需求列表">🔄</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="desc-header">
+          <label>详细描述</label>
+          <div class="desc-actions">
+            <button id="btn-copy-description" class="btn-text-link">📋 复制内容</button>
+            <button id="btn-toggle-source" class="btn-text-link">📝 编辑源码</button>
+          </div>
+        </div>
+        <div id="bug-description-preview" class="desc-preview"></div>
+        <textarea id="bug-description" rows="8" class="hidden"></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group half">
+          <label for="bug-handler">处理人</label>
+          <input type="text" id="bug-handler" placeholder="处理开发">
+        </div>
+        <div class="form-group half">
+          <label for="bug-developer">开发人员</label>
+          <input type="text" id="bug-developer" placeholder="开发人员">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group half">
+          <label for="bug-priority">优先级</label>
+          <select id="bug-priority">
+            <option value="P0 (紧急)">P0 (紧急)</option>
+            <option value="P1 (高)">P1 (高)</option>
+            <option value="P2 (中)" selected>P2 (中)</option>
+            <option value="P3 (低)">P3 (低)</option>
+          </select>
+        </div>
+        <div class="form-group half">
+          <label for="bug-severity">严重程度</label>
+          <select id="bug-severity">
+            <option value="致命">致命</option>
+            <option value="严重">严重</option>
+            <option value="一般" selected>一般</option>
+            <option value="轻微">轻微</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group half">
+          <label for="bug-phase">发现阶段</label>
+          <select id="bug-phase">
+            <option value="环境">环境</option>
+            <option value="开发">开发</option>
+            <option value="测试" selected>测试</option>
+            <option value="验收">验收</option>
+          </select>
+        </div>
+        <div class="form-group half">
+          <label for="bug-module">所属模块</label>
+          <input type="text" id="bug-module" placeholder="模块名">
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button id="btn-submit" class="btn-primary btn-submit">
+          <span class="btn-text">🚀 一键提交到 TAPD</span>
+          <span class="btn-loading hidden">
+            <span class="spinner"></span> 正在提交...
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 阶段三：成功结果 -->
+    <section id="phase-success" class="phase hidden">
+      <div class="success-card">
+        <div class="success-icon">🎉</div>
+        <h2>提交成功！</h2>
+        <p id="success-message">Bug 已成功提交到 TAPD</p>
+        <a id="success-link" href="#" target="_blank" class="btn-primary btn-link">点击查看 TAPD 缺陷</a>
+        <button id="btn-new" class="btn-secondary">提交新的 Bug</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="clipboard.js"></script>
+  <script src="popup.js"></script>
+</body>
+
+</html>

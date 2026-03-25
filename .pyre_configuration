@@ -1,0 +1,18 @@
+{
+  "source_directories": [
+    "test_platform",
+    "tests"
+  ],
+  "search_path": [
+    "."
+  ],
+  "site_roots": [
+    "test_platform/.venv/lib/python3.11/site-packages"
+  ],
+  "site_package_search_strategy": "pep561",
+  "python_version": "3.11.9",
+  "exclude": [
+    "**/node_modules/**",
+    "**/.next/**"
+  ]
+}

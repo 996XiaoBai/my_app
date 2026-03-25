@@ -1,0 +1,71 @@
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.pyre/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Runtime / generated artifacts
+*.log
+logs/
+history/
+downloads/
+api_server.log
+ai_news_bot/data/
+ai_news_bot/bot_data/
+ai_news_bot/data/review_exports/
+
+# Frontend build / package artifacts
+node_modules/
+.next/
+coverage/
+dist/
+build/
+*.tsbuildinfo
+
+# Project-local caches
+test_platform/.cache/
+test_platform/core/document_processing/.cache/
+test_platform/tools/.cache/
+test_platform/web/dev_logs.txt
+
+# Nested repositories
+.git/
+**/.git/
+
+# Binary or local work files
+*.db
+*.sqlite
+*.sqlite3
+*.tsbuildinfo
+*.mp4
+*.xlsx
+*.xmind
+*.docx
+*.pdf
+qa-workbench-*.png
+review-page-*.png
+sidebar-footer-*.png
+test_platform_*.png
+logs/template_preview.png
+wechat_preview.html
+ai_news_bot/wechat_preview.html
+
+# IDE / local metadata
+skills-lock.json

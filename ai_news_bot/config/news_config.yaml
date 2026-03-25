@@ -1,0 +1,301 @@
+# AI 新闻机器人信源配置
+# priority 字段: 1=最高(官方一手/工程博客) / 2=高(权威垂类) / 3=中(泛科技) / 4=低(需严格过滤)
+# max_per_source: 每个信源单独的最大贡献条数（覆盖全局默认值）
+
+news_sources:
+  # ==================== 优先级 1：顶级实验室官方博客 ====================
+  - name: "OpenAI Blog"
+    url: "https://openai.com/blog/rss.xml"
+    type: "rss"
+    priority: 1
+
+  - name: "Google DeepMind Blog"
+    url: "https://blog.google/technology/ai/rss/"
+    type: "rss"
+    priority: 1
+
+  - name: "Meta AI Research Blog"
+    url: "https://engineering.fb.com/category/ai-research/feed/"
+    type: "rss"
+    priority: 1
+
+  - name: "Hugging Face Blog"
+    url: "https://huggingface.co/blog/feed.xml"
+    type: "rss"
+    priority: 1
+
+  # ==================== 优先级 1：工程落地类技术博客 ====================
+  - name: "LangChain Blog"
+    url: "https://blog.langchain.dev/rss/"
+    type: "rss"
+    priority: 1
+  - name: "Simon Willison Blog"
+    url: "https://simonwillison.net/atom/everything/"
+    type: "rss"
+    priority: 1
+  - name: "Weights & Biases Blog"
+    url: "https://wandb.ai/fully-connected/rss.xml"
+    type: "rss"
+    priority: 1
+  - name: "NVIDIA Developer Blog"
+    url: "https://developer.nvidia.com/blog/feed"
+    type: "rss"
+    priority: 1
+  # ==================== 优先级 1：国内 AI 实验室 GitHub（开源与工程进展）====================
+  - name: "DeepSeek AI (GitHub)"
+    url: "https://github.com/deepseek-ai.atom"
+    type: "rss"
+    priority: 1
+
+  - name: "QwenLM 通义千问 (GitHub)"
+    url: "https://github.com/QwenLM.atom"
+    type: "rss"
+    priority: 1
+
+  - name: "InternLM 书生 (GitHub)"
+    url: "https://github.com/InternLM.atom"
+    type: "rss"
+    priority: 1
+
+  - name: "MoonshotAI Kimi (GitHub)"
+    url: "https://github.com/MoonshotAI.atom"
+    type: "rss"
+    priority: 1
+
+  - name: "Microsoft Research AI"
+    url: "https://www.microsoft.com/en-us/research/feed/"
+    type: "rss"
+    priority: 1
+
+  # ==================== 优先级 1：高质量技术社区 ====================
+  - name: "Hacker News AI"
+    url: "https://hnrss.org/newest?q=LLM+OR+transformer+OR+fine-tuning+OR+RAG+OR+AI+agent+OR+vLLM+OR+deployment&points=50"
+    type: "rss"
+    priority: 1
+  # ==================== 优先级 2：学术论文（限制配额，偏工程应用类）====================
+  - name: "arXiv AI"
+    url: "http://export.arxiv.org/rss/cs.AI"
+    type: "rss"
+    priority: 2
+  - name: "arXiv LLM (CL)"
+    url: "http://export.arxiv.org/rss/cs.CL"
+    type: "rss"
+    priority: 2
+  # ==================== 优先级 2：权威 AI 专属媒体 ====================
+  - name: "机器之心"
+    url: "https://www.jiqizhixin.com/rss"
+    type: "rss"
+    priority: 2
+
+  - name: "量子位"
+    url: "https://www.qbitai.com/feed"
+    type: "rss"
+    priority: 2
+
+  - name: "MIT Technology Review AI"
+    url: "https://www.technologyreview.com/topic/artificial-intelligence/feed"
+    type: "rss"
+    priority: 2
+
+  - name: "AIBase基地"
+    url: "https://mcpapi.aibase.cn/api/v1/news/list/home?page=1&limit=20"
+    type: "api"
+    priority: 2
+
+
+# 内容过滤配置
+filter:
+  # 只抓取过去 N 小时内发布的文章（防止重复推送历史内容）
+  time_window_hours: 24
+
+  # 必须包含以下关键词之一才会推送
+  keywords:
+    # === 核心：基础定义与核心模型 ===
+    - "AI"
+    - "人工智能"
+    - "大模型"
+    - "LLM"
+    - "GPT"
+    - "ChatGPT"
+    - "Claude"
+    - "Gemini"
+    - "DeepSeek"
+    - "Llama"
+    - "Mistral"
+    - "Qwen"
+    - "SOTA"
+    - "Anthropic"
+    - "Grok"
+    - "xAI"
+    - "Sora"
+    - "扩散模型"
+    - "GLM"
+    - "ChatGLM"
+    - "Yi模型"
+    - "通义千问"
+    - "业界领先"
+    - "最前沿"
+    - "新版本"
+    - "模型发布"
+    - "正式版"
+    # === 进阶技术与专业术语 ===
+    - "生成式AI"
+    - "AIGC"
+    - "多模态"
+    - "Stable Diffusion"
+    - "AGI"
+    - "通用人工智能"
+    - "因果推断"
+    - "长文本"
+    - "上下文窗口"
+    - "Context Window"
+    - "推理加速"
+    - "推理性能"
+    - "并发吞吐"
+    # === 工程落地与应用实战 ===
+    - "RAG"
+    - "检索增强生成"
+    - "微调"
+    - "fine-tuning"
+    - "Agent"
+    - "智能体"
+    - "全链路Agent"
+    - "具身智能"
+    - "Copilot"
+    - "提示工程"
+    - "Prompt Engineering"
+    - "模型架构"
+    - "Transformer架构"
+    - "MoE架构"
+    - "Agent自动化"
+    - "模型部署"
+    - "model deployment"
+    - "model serving"
+    - "MLOps"
+    - "向量数据库"
+    - "Dify"
+    - "工程实战"
+    - "业务落地"
+    - "生产环境"
+    - "Production"
+    - "最佳实践"
+    - "Best Practices"
+    - "Case Study"
+    - "案例研究"
+    # === 量化与推理加速 ===
+    - "pre-training"
+    - "post-training"
+    - "RLHF"
+    - "DPO"
+    - "LoRA"
+    - "QLoRA"
+    - "量化"
+    - "GPTQ"
+    - "AWQ"
+    - "GGUF"
+    - "benchmark"
+    - "attention"
+    - "embedding"
+    - "tokenizer"
+    - "inference"
+    - "serving"
+    - "vLLM"
+    - "TensorRT"
+    - "ONNX"
+    - "Triton"
+    - "TGI"
+    - "Ollama"
+    - "llama.cpp"
+    # === 算力与基础设施 ===
+    - "AI 算力"
+    - "AI 芯片"
+    - "GPU 算力"
+    - "NPU"
+    - "TPU"
+    - "英伟达"
+    - "Nvidia"
+    - "CUDA"
+    # === 公司与组织 ===
+    - "OpenAI"
+    - "Anthropic"
+
+  # 排除关键词（过滤商业噪声、政策争议、消费电子）
+  exclude_keywords:
+    # 股市财经与纯商业
+    - "股价"
+    - "股市"
+    - "上市"
+    - "财报"
+    - "收盘"
+    - "大盘"
+    - "行情"
+    - "资金"
+    - "板块"
+    - "早报"
+    - "裁员"
+    - "估值"
+    - "融资"
+    - "IPO"
+    - "valuation"
+    - "fundraising"
+    # 政策与地缘争议
+    - "五角大楼"
+    - "Pentagon"
+    - "supply chain risk"
+    - "供应链风险"
+    - "战争"
+    - "War"
+    - "military"
+    - "国防部"
+    - "制裁"
+    - "禁令"
+    - "App Store排名"
+    # 杂乱八卦
+    - "八卦"
+    - "娱乐"
+    - "直播带货"
+    - "网红"
+    # 消费电子评测
+    - "游戏显卡"
+    - "游戏帧率"
+    - "RTX 5090"
+    - "RTX 4090"
+    - "电商"
+    - "测评"
+    # 无关管理内容
+    - "营销"
+    - "销售"
+    - "人事"
+    - "行政"
+
+  # 全局最大推送数量
+  max_count: 20
+
+  # 为质量评分保留更大的候选池，避免高质量内容在打分前被截断
+  candidate_pool_multiplier: 4
+
+  # 限制单一来源在最终候选中的占比，提升内容多样性
+  max_per_source: 3
+
+  # 正文补抓配置，用于提升评分判断准确性
+  content_fetch_limit: 16
+  content_fetch_concurrency: 4
+  full_content_max_chars: 4000
+
+  # 最终入选阶段的多样性约束
+  max_per_source_final: 2
+  max_per_category_final: 2
+
+  # 低于该分数的内容直接淘汰
+  min_quality_score: 6
+
+  # 每个信源默认最大贡献条数（以提供足够的候选给 Dify 评分体系过滤）
+  # 信源连续失败告警阈值
+  source_fail_threshold: 3
+
+# 定时任务配置
+scheduler:
+  enabled: true
+  schedules:
+    - time: "09:00"  # 测试日报
+    - time: "09:10"  # AI 日报

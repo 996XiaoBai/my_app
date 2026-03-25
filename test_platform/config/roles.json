@@ -1,0 +1,26 @@
+{
+    "product": {
+        "label": "📋 产品视角",
+        "skill": "requirement_expert_reviewer"
+    },
+    "tech": {
+        "label": "💻 技术视角",
+        "skill": "requirement_expert_reviewer"
+    },
+    "design": {
+        "label": "🎨 设计视角",
+        "skill": "requirement_expert_reviewer"
+    },
+    "test": {
+        "label": "🧪 测试视角",
+        "skill": "requirement_expert_reviewer"
+    },
+    "security": {
+        "label": "🔒 安全视角",
+        "skill": "requirement_expert_reviewer"
+    },
+    "architect": {
+        "label": "🏛️ 架构评审",
+        "skill": "requirement_expert_reviewer"
+    }
+}

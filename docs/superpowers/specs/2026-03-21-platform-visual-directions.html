@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>测试平台视觉方向提案</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #030712;
+      --panel: rgba(15, 23, 42, 0.72);
+      --panel-soft: rgba(15, 23, 42, 0.45);
+      --border: rgba(148, 163, 184, 0.16);
+      --text: #e5eefc;
+      --muted: #94a3b8;
+      --glow-blue: rgba(56, 189, 248, 0.22);
+      --glow-indigo: rgba(129, 140, 248, 0.22);
+      --glow-emerald: rgba(52, 211, 153, 0.22);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "SF Pro Display", "PingFang SC", "Helvetica Neue", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.16), transparent 22%),
+        radial-gradient(circle at top right, rgba(99, 102, 241, 0.12), transparent 18%),
+        linear-gradient(180deg, #020617 0%, #070b14 100%);
+      color: var(--text);
+      padding: 40px 28px 56px;
+    }
+
+    .page {
+      max-width: 1480px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(125, 211, 252, 0.18);
+      background: rgba(14, 165, 233, 0.08);
+      color: #7dd3fc;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 18px 0 10px;
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+    }
+
+    .subtitle {
+      margin: 0 0 30px;
+      max-width: 920px;
+      color: #9fb0c9;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 24px 72px rgba(2, 8, 23, 0.42);
+    }
+
+    .preview {
+      min-height: 430px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .meta span:first-child {
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+    }
+
+    .dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dots i {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .war-room {
+      background:
+        radial-gradient(circle at 20% 10%, rgba(14, 165, 233, 0.18), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(34, 197, 94, 0.12), transparent 24%),
+        linear-gradient(160deg, #061018 0%, #081521 44%, #04070c 100%);
+    }
+
+    .war-room::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+      background-size: 30px 30px;
+      opacity: 0.35;
+    }
+
+    .lab {
+      background:
+        radial-gradient(circle at 18% 10%, rgba(99, 102, 241, 0.25), transparent 24%),
+        radial-gradient(circle at 85% 18%, rgba(56, 189, 248, 0.22), transparent 26%),
+        linear-gradient(145deg, #0a0f1d 0%, #101828 48%, #0b1020 100%);
+    }
+
+    .lab::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 24%),
+        radial-gradient(circle at 50% -10%, rgba(125, 211, 252, 0.16), transparent 34%);
+    }
+
+    .obsidian {
+      background: linear-gradient(180deg, #050607 0%, #090b0e 100%);
+    }
+
+    .obsidian::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 140px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08), transparent 46%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 70%);
+    }
+
+    .hero {
+      position: relative;
+      z-index: 1;
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 16px;
+    }
+
+    .hero.large {
+      font-size: 34px;
+    }
+
+    .hero.medium {
+      font-size: 31px;
+    }
+
+    .metrics {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .metric {
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid transparent;
+    }
+
+    .metric .label {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .metric .value {
+      margin-top: 6px;
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .metric.blue {
+      background: linear-gradient(180deg, rgba(34, 211, 238, 0.18), rgba(15, 23, 42, 0.4));
+      border-color: rgba(34, 211, 238, 0.16);
+    }
+
+    .metric.green {
+      background: linear-gradient(180deg, rgba(52, 211, 153, 0.18), rgba(15, 23, 42, 0.4));
+      border-color: rgba(52, 211, 153, 0.16);
+    }
+
+    .metric.amber {
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.18), rgba(15, 23, 42, 0.4));
+      border-color: rgba(245, 158, 11, 0.16);
+    }
+
+    .metric.soft {
+      background: var(--panel-soft);
+      border-color: var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    .split {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 12px;
+    }
+
+    .panel {
+      padding: 12px;
+      border-radius: 18px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(14px);
+    }
+
+    .panel-title {
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .bars {
+      display: grid;
+      gap: 8px;
+    }
+
+    .bar {
+      height: 16px;
+      border-radius: 999px;
+    }
+
+    .bar.blue {
+      background: linear-gradient(90deg, rgba(34, 211, 238, 0.3), rgba(34, 211, 238, 0.04));
+    }
+
+    .bar.green {
+      background: linear-gradient(90deg, rgba(52, 211, 153, 0.26), rgba(52, 211, 153, 0.04));
+    }
+
+    .bar.indigo {
+      background: linear-gradient(90deg, rgba(99, 102, 241, 0.24), rgba(99, 102, 241, 0.04));
+    }
+
+    .radar {
+      height: 128px;
+      border-radius: 16px;
+      border: 1px solid rgba(125, 211, 252, 0.08);
+      background:
+        radial-gradient(circle at center, rgba(34, 211, 238, 0.18), transparent 42%),
+        radial-gradient(circle at center, transparent 38%, rgba(34, 211, 238, 0.12) 39%, transparent 40%),
+        radial-gradient(circle at center, transparent 60%, rgba(34, 211, 238, 0.1) 61%, transparent 62%),
+        linear-gradient(180deg, rgba(3, 7, 18, 0.6), rgba(3, 7, 18, 0.85));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .radar::after {
+      content: "";
+      position: absolute;
+      left: calc(50% - 1px);
+      top: 18px;
+      width: 2px;
+      height: 54px;
+      background: linear-gradient(180deg, rgba(34, 211, 238, 0.75), rgba(34, 211, 238, 0));
+      transform-origin: bottom center;
+      transform: rotate(38deg);
+    }
+
+    .obsidian-number {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      margin-bottom: 18px;
+    }
+
+    .obsidian-number strong {
+      font-size: 56px;
+      line-height: 1;
+    }
+
+    .obsidian-number span {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      padding-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .foot {
+      padding: 18px 18px 22px;
+      background: rgba(2, 6, 23, 0.62);
+      border-top: 1px solid rgba(148, 163, 184, 0.08);
+    }
+
+    .foot h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .foot p {
+      margin: 0;
+      color: #a8b6cb;
+      line-height: 1.75;
+      font-size: 14px;
+    }
+
+    .choose {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .choose-item {
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      background: rgba(15, 23, 42, 0.52);
+    }
+
+    .choose-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 18px;
+    }
+
+    .choose-item span {
+      color: #9fb0c9;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .open-tip {
+      margin-top: 18px;
+      color: #7dd3fc;
+      font-size: 14px;
+    }
+
+    @media (max-width: 1180px) {
+      .grid,
+      .choose {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="eyebrow">Visual Proposal</div>
+    <h1>测试平台视觉方向提案</h1>
+    <p class="subtitle">
+      这份文件是离线视觉稿，不依赖本地服务端口。你主要看第一眼气质、信息密度、科技感和高级感。
+      现在不用纠结具体文案，先判断哪种视觉语言最接近你想要的平台感觉。
+    </p>
+
+    <div class="grid">
+      <section class="card">
+        <div class="preview war-room">
+          <div class="meta">
+            <span style="color:#67e8f9;">Quality War Room</span>
+            <div class="dots">
+              <i style="background:#22d3ee;box-shadow:0 0 14px rgba(34,211,238,.6);"></i>
+              <i style="background:#34d399;box-shadow:0 0 14px rgba(52,211,153,.55);"></i>
+              <i style="background:#f59e0b;box-shadow:0 0 14px rgba(245,158,11,.5);"></i>
+            </div>
+          </div>
+
+          <div class="hero large">测试作战指挥中心</div>
+
+          <div class="metrics">
+            <div class="metric blue">
+              <div class="label" style="color:#67e8f9;">Active</div>
+              <div class="value">18</div>
+            </div>
+            <div class="metric green">
+              <div class="label" style="color:#86efac;">Risk</div>
+              <div class="value">06</div>
+            </div>
+            <div class="metric amber">
+              <div class="label" style="color:#fcd34d;">Regression</div>
+              <div class="value">12</div>
+            </div>
+          </div>
+
+          <div class="split">
+            <div style="display:grid;gap:10px;">
+              <div class="panel">
+                <div class="panel-title">Mission Pipeline</div>
+                <div class="chips">
+                  <span class="chip" style="background:rgba(14,165,233,.14);border-color:rgba(14,165,233,.14);">导入</span>
+                  <span class="chip" style="background:rgba(14,165,233,.14);border-color:rgba(14,165,233,.14);">评审</span>
+                  <span class="chip" style="background:rgba(34,197,94,.14);border-color:rgba(34,197,94,.14);">设计</span>
+                  <span class="chip" style="background:rgba(99,102,241,.16);border-color:rgba(99,102,241,.16);">自动化</span>
+                </div>
+              </div>
+              <div class="panel">
+                <div class="panel-title">Feed</div>
+                <div class="bars">
+                  <div class="bar blue"></div>
+                  <div class="bar green"></div>
+                  <div class="bar indigo"></div>
+                </div>
+              </div>
+            </div>
+            <div style="display:grid;gap:10px;">
+              <div class="panel">
+                <div class="panel-title">Risk Radar</div>
+                <div class="radar"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="foot">
+          <h3>方案 A：军工级指挥中心</h3>
+          <p>强控制台、强压迫感、像质量作战室。科技感最直接，适合作为首页和管理总控台。</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="preview lab">
+          <div class="meta">
+            <span style="color:#c4b5fd;">QA AI Lab</span>
+            <div style="padding:6px 10px;border-radius:999px;background:rgba(99,102,241,.15);font-size:10px;border:1px solid rgba(129,140,248,.16);position:relative;z-index:1;">旗舰模式</div>
+          </div>
+
+          <div class="hero medium">AI 驱动测试旗舰台</div>
+
+          <div class="split">
+            <div style="display:grid;gap:10px;">
+              <div class="panel">
+                <div class="panel-title" style="color:#a5b4fc;">Current Task</div>
+                <div style="font-size:22px;font-weight:700;line-height:1.2;margin-bottom:12px;">内容风控接入回归</div>
+                <div class="chips">
+                  <span class="chip" style="background:rgba(99,102,241,.14);">上下文联动</span>
+                  <span class="chip" style="background:rgba(59,130,246,.14);">自动化接力</span>
+                  <span class="chip" style="background:rgba(16,185,129,.14);">协作建议</span>
+                </div>
+              </div>
+
+              <div class="metrics" style="margin-bottom:0;">
+                <div class="metric soft">
+                  <div class="label" style="color:#a5b4fc;">任务</div>
+                  <div class="value">24</div>
+                </div>
+                <div class="metric soft">
+                  <div class="label" style="color:#93c5fd;">协作</div>
+                  <div class="value">08</div>
+                </div>
+                <div class="metric soft">
+                  <div class="label" style="color:#86efac;">资产</div>
+                  <div class="value">61</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:grid;gap:10px;">
+              <div class="panel">
+                <div class="panel-title" style="color:#a5b4fc;">AI Insight</div>
+                <div style="height:122px;border-radius:16px;background:
+                  radial-gradient(circle at 28% 35%, rgba(96,165,250,.35), transparent 18%),
+                  radial-gradient(circle at 70% 45%, rgba(129,140,248,.28), transparent 22%),
+                  linear-gradient(145deg, rgba(30,41,59,.92), rgba(15,23,42,.75));
+                  border:1px solid rgba(125,211,252,.08);"></div>
+              </div>
+              <div class="panel">
+                <div class="panel-title" style="color:#a5b4fc;">Capability Flow</div>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+                  <div style="height:74px;border-radius:14px;background:linear-gradient(180deg, rgba(99,102,241,.24), rgba(15,23,42,.35));"></div>
+                  <div style="height:74px;border-radius:14px;background:linear-gradient(180deg, rgba(59,130,246,.24), rgba(15,23,42,.35));"></div>
+                  <div style="height:74px;border-radius:14px;background:linear-gradient(180deg, rgba(16,185,129,.24), rgba(15,23,42,.35));"></div>
+                  <div style="height:74px;border-radius:14px;background:linear-gradient(180deg, rgba(245,158,11,.24), rgba(15,23,42,.35));"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="foot">
+          <h3>方案 B：AI 实验室旗舰台</h3>
+          <p>更高级、更未来，像顶级 AI 工程平台。科技感和产品质感更平衡，适合作为主工作台。</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="preview obsidian">
+          <div class="meta">
+            <span style="color:#cbd5e1;">Obsidian QA</span>
+            <div style="width:44px;height:44px;border-radius:999px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);position:relative;z-index:1;"></div>
+          </div>
+
+          <div class="hero large" style="max-width:70%;">少字，但很强。</div>
+
+          <div class="split">
+            <div>
+              <div class="obsidian-number">
+                <strong>24</strong>
+                <span>Active Tasks</span>
+              </div>
+              <div class="bars">
+                <div class="bar" style="background:linear-gradient(90deg, rgba(255,255,255,.84), rgba(255,255,255,.08));"></div>
+                <div class="bar" style="background:linear-gradient(90deg, rgba(255,255,255,.62), rgba(255,255,255,.06));"></div>
+                <div class="bar" style="background:linear-gradient(90deg, rgba(255,255,255,.38), rgba(255,255,255,.04));"></div>
+              </div>
+
+              <div class="chips" style="margin-top:18px;">
+                <span class="chip">任务</span>
+                <span class="chip">评审</span>
+                <span class="chip">自动化</span>
+                <span class="chip">回归</span>
+              </div>
+            </div>
+
+            <div style="display:grid;gap:10px;">
+              <div class="panel" style="background:rgba(255,255,255,.025);border-color:rgba(255,255,255,.08);">
+                <div class="panel-title">Status</div>
+                <div style="height:84px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.05);"></div>
+              </div>
+              <div class="metrics" style="grid-template-columns:1fr 1fr;margin-bottom:0;">
+                <div class="metric soft" style="background:rgba(255,255,255,.025);border-color:rgba(255,255,255,.08);">
+                  <div class="label">Risk</div>
+                  <div class="value">06</div>
+                </div>
+                <div class="metric soft" style="background:rgba(255,255,255,.025);border-color:rgba(255,255,255,.08);">
+                  <div class="label">Auto</div>
+                  <div class="value">11</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="foot">
+          <h3>方案 C：极简黑曜控制台</h3>
+          <p>不是炫技型科技感，而是克制、压缩、长期耐看的专业感，适合长期日常使用。</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="choose">
+      <div class="choose-item">
+        <strong>A. 军工级指挥中心</strong>
+        <span>如果你想要更强冲击力、更强作战室氛围，选这个。</span>
+      </div>
+      <div class="choose-item">
+        <strong>B. AI 实验室旗舰台</strong>
+        <span>如果你想要高级未来感，同时还保留产品质感和可用性，选这个。</span>
+      </div>
+      <div class="choose-item">
+        <strong>C. 极简黑曜控制台</strong>
+        <span>如果你想要少字、克制、高端、耐看，选这个。</span>
+      </div>
+    </div>
+
+    <p class="open-tip">
+      请选择你更喜欢的方向，然后在聊天里直接回复我：`A`、`B` 或 `C`。
+    </p>
+  </div>
+</body>
+</html>

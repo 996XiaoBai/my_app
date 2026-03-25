@@ -1,0 +1,1259 @@
+# 推送外观配置
+notification:
+  feishu_doc_title: "AI 前沿：智能测试与研发效能日报"
+  feishu_main_heading: "大模型与智能测试"
+  wecom_msg_title: "📖 【AI前沿：智能测试与研发效能日报】"
+
+news_sources:
+  # ======= 第一层：测试社区与官方博客/新闻（高可信、可读性更强）=======
+  - name: "TesterHome 社区精选"
+    url: "https://testerhome.com/api/v3/topics.json?limit=20&type=excellent"
+    type: "testerhome_api"
+    priority: 1
+    max_per_source: 4
+
+  - name: "TesterHome AI测试"
+    url: "https://testerhome.com/api/v3/topics.json?limit=20&node_id=134"
+    type: "testerhome_api"
+    priority: 2
+    dify_exploration: true
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - "AI测试"
+      - "AI 测试"
+      - "AI辅助测试"
+      - "AI 赋能测试"
+      - "智能测试"
+      - "大模型测试"
+      - "Playwright"
+      - "Agent"
+      - "测试 Agent"
+      - "智能体"
+      - "MCP"
+      - "LLM"
+      - "Claude Code"
+      - "Function Calling"
+      - "Tool Calling"
+      - "AI生成用例"
+      - "AI生成脚本"
+      - "AI缺陷诊断"
+      - "AI回归优化"
+      - "AI测试数据"
+      - ["AI", "测试用例"]
+      - ["AI", "测试脚本"]
+      - ["AI", "回归"]
+      - ["AI", "缺陷"]
+      - ["AI", "测试数据"]
+      - ["提示词", "评测"]
+      - ["智能体", "评测"]
+      - ["LLM", "评测"]
+      - ["RAG", "评测"]
+    exclude_keywords:
+      - "大家都用哪些"
+      - "都用哪些"
+      - "有没有"
+      - "思路"
+      - "随笔"
+      - "冲击"
+      - "日报"
+      - "招聘"
+
+  - name: "TesterHome 自动化工具"
+    url: "https://testerhome.com/api/v3/topics.json?limit=20&node_id=2"
+    type: "testerhome_api"
+    priority: 2
+    dify_exploration: true
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - "自动化"
+      - "UI 自动化"
+      - "接口自动化"
+      - "Playwright"
+      - "Cypress"
+      - "Selenium"
+      - "Appium"
+      - "Maestro"
+      - "Midscene"
+      - "Postman"
+      - "Newman"
+      - "WireMock"
+      - "JMeter"
+      - "STF"
+      - "UiAutomator"
+      - "SoloPi"
+      - "Airtest"
+      - "MCP"
+      - "Skill"
+      - "Claude Code"
+      - "Function Calling"
+      - "Tool Calling"
+      - "接口测试"
+      - "性能测试"
+      - "安全测试"
+      - "测试平台"
+      - "质量工程"
+      - "持续测试"
+      - "测试覆盖率"
+      - "混沌工程"
+      - "鸿蒙"
+      - ["发布", "验证"]
+      - ["灰度", "验证"]
+      - ["持续", "交付"]
+      - ["测试环境", "治理"]
+    exclude_keywords:
+      - "小调查"
+      - "使用情况"
+      - "求助"
+      - "迷茫"
+      - "招聘"
+      - "问卷"
+      - "有没有"
+      - "都用哪些"
+
+  - name: "Google Testing Blog"
+    url: "https://testing.googleblog.com/feeds/posts/default?alt=rss"
+    type: "rss"
+    priority: 1
+    max_per_source: 2
+    time_window_hours: 720
+
+  - name: "InfoQ Testing News"
+    url: "https://feed.infoq.com/Testing/news/"
+    type: "rss"
+    priority: 1
+    max_per_source: 2
+    time_window_hours: 720
+
+  - name: "Cypress 官方博客"
+    url: "https://www.cypress.io/feed.xml"
+    type: "rss"
+    priority: 1
+    max_per_source: 2
+    time_window_hours: 720
+
+  # ======= 第二层：主流工具官方版本更新（补充工作流变化）=======
+  - name: "Playwright 官方版本发布"
+    url: "https://github.com/microsoft/playwright/releases.atom"
+    type: "rss"
+    priority: 1
+    max_per_source: 2
+    time_window_hours: 336
+    exclude_title_patterns:
+      - '\brc\d+\b'
+      - '\b(?:alpha|beta|preview|pre-release|snapshot)\b'
+
+  - name: "Selenium 官方版本发布"
+    url: "https://github.com/SeleniumHQ/selenium/releases.atom"
+    type: "rss"
+    priority: 1
+    max_per_source: 2
+    time_window_hours: 336
+    exclude_title_patterns:
+      - '\bnightly\b'
+      - '\brc\d+\b'
+      - '\b(?:alpha|beta|preview|pre-release|snapshot)\b'
+
+  - name: "pytest 官方版本发布"
+    url: "https://github.com/pytest-dev/pytest/releases.atom"
+    type: "rss"
+    priority: 1
+    max_per_source: 2
+    time_window_hours: 336
+    exclude_title_patterns:
+      - '\brc\d+\b'
+      - '\b(?:alpha|beta|preview|pre-release|snapshot)\b'
+
+  - name: "k6 官方版本发布"
+    url: "https://github.com/grafana/k6/releases.atom"
+    type: "rss"
+    priority: 1
+    max_per_source: 2
+    time_window_hours: 336
+    exclude_title_patterns:
+      - '\brc\d+\b'
+      - '\b(?:alpha|beta|preview|pre-release|snapshot)\b'
+
+  - name: "Robot Framework 官方版本发布"
+    url: "https://github.com/robotframework/robotframework/releases.atom"
+    type: "rss"
+    priority: 2
+    max_per_source: 1
+    time_window_hours: 720
+    exclude_title_patterns:
+      - '\brc\d+\b'
+      - '\b(?:alpha|beta|preview|pre-release|snapshot)\b'
+
+  - name: "Newman 官方版本发布"
+    url: "https://github.com/postmanlabs/newman/releases.atom"
+    type: "rss"
+    priority: 2
+    max_per_source: 1
+    time_window_hours: 336
+    exclude_title_patterns:
+      - '\brc\d+\b'
+      - '\b(?:alpha|beta|preview|pre-release|snapshot)\b'
+
+  - name: "Cucumber JVM 官方版本发布"
+    url: "https://github.com/cucumber/cucumber-jvm/releases.atom"
+    type: "rss"
+    priority: 2
+    max_per_source: 1
+    time_window_hours: 720
+    exclude_title_patterns:
+      - '\brc\d+\b'
+      - '\b(?:alpha|beta|preview|pre-release|snapshot)\b'
+
+  - name: "Appium 官方版本发布"
+    url: "https://github.com/appium/appium/releases.atom"
+    type: "rss"
+    priority: 2
+    max_per_source: 1
+    time_window_hours: 336
+    exclude_title_patterns:
+      - '\brc\d+\b'
+      - '\b(?:alpha|beta|preview|pre-release|snapshot)\b'
+    exclude_keywords:
+      - "fake-plugin"
+      - "@appium/"
+      - "docs-plugin"
+
+  - name: "Allure 官方版本发布"
+    url: "https://github.com/allure-framework/allure2/releases.atom"
+    type: "rss"
+    priority: 2
+    max_per_source: 2
+    time_window_hours: 336
+    exclude_title_patterns:
+      - '\brc\d+\b'
+      - '\b(?:alpha|beta|preview|pre-release|snapshot)\b'
+
+  - name: "WebdriverIO 官方版本发布"
+    url: "https://github.com/webdriverio/webdriverio/releases.atom"
+    type: "rss"
+    priority: 2
+    max_per_source: 1
+    time_window_hours: 336
+    require_keywords:
+      - "WebdriverIO"
+    exclude_title_patterns:
+      - '\brc\d+\b'
+      - '\b(?:alpha|beta|preview|pre-release|snapshot)\b'
+
+  - name: "Midscene 官方版本发布"
+    url: "https://github.com/web-infra-dev/midscene/releases.atom"
+    type: "rss"
+    priority: 2
+    max_per_source: 1
+    time_window_hours: 336
+    require_keywords:
+      - "Midscene"
+    exclude_title_patterns:
+      - '\brc\d+\b'
+      - '\b(?:alpha|beta|preview|pre-release|snapshot)\b'
+
+  - name: "Locust 官方版本发布"
+    url: "https://github.com/locustio/locust/releases.atom"
+    type: "rss"
+    priority: 2
+    max_per_source: 1
+    time_window_hours: 720
+    exclude_title_patterns:
+      - '\brc\d+\b'
+      - '\b(?:alpha|beta|preview|pre-release|snapshot)\b'
+
+  - name: "Gatling 官方版本发布"
+    url: "https://github.com/gatling/gatling/releases.atom"
+    type: "rss"
+    priority: 2
+    max_per_source: 1
+    time_window_hours: 720
+    exclude_title_patterns:
+      - '\brc\d+\b'
+      - '\b(?:alpha|beta|preview|pre-release|snapshot)\b'
+
+  - name: "WireMock 官方版本发布"
+    url: "https://github.com/wiremock/wiremock/releases.atom"
+    type: "rss"
+    priority: 2
+    max_per_source: 1
+    time_window_hours: 720
+    exclude_title_patterns:
+      - '\brc\d+\b'
+      - '\b(?:alpha|beta|preview|pre-release|snapshot)\b'
+
+  - name: "Airtest 官方版本发布"
+    url: "https://github.com/AirtestProject/Airtest/releases.atom"
+    type: "rss"
+    priority: 2
+    max_per_source: 1
+    time_window_hours: 720
+    exclude_title_patterns:
+      - '\brc\d+\b'
+      - '\b(?:alpha|beta|preview|pre-release|snapshot)\b'
+
+  - name: "MeterSphere 官方版本发布"
+    url: "https://github.com/metersphere/metersphere/releases.atom"
+    type: "rss"
+    priority: 2
+    max_per_source: 1
+    time_window_hours: 720
+    exclude_title_patterns:
+      - '\brc\d+\b'
+      - '\b(?:alpha|beta|preview|pre-release|snapshot)\b'
+
+  # ======= 第三层：前沿测试厂商博客（强约束保质量，防止营销内容刷屏）=======
+  - name: "Checkly 官方博客"
+    url: "https://www.checklyhq.com/rss.xml"
+    type: "rss"
+    priority: 3
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - "Playwright"
+      - "testing"
+      - "MCP"
+      - "browser"
+      - "E2E"
+      - "end-to-end"
+      - "synthetic monitoring"
+      - "test"
+    exclude_keywords:
+      - "hiring"
+      - "cover letter"
+      - "candidate"
+
+  - name: "mabl 官方博客"
+    url: "https://www.mabl.com/blog/rss.xml"
+    type: "rss"
+    priority: 3
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - "quality"
+      - "testing"
+      - "automation"
+      - "Playwright"
+      - "QA"
+      - "test"
+    exclude_keywords:
+      - "webinar"
+      - "white paper"
+      - "podcast"
+      - "summit"
+      - "on-demand"
+      - "register"
+
+  - name: "BrowserStack 官方博客"
+    url: "https://www.browserstack.com/blog/rss/"
+    type: "rss"
+    priority: 3
+    dify_exploration: true
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - "Playwright"
+      - "Selenium"
+      - "Cypress"
+      - "Appium"
+      - "Percy"
+      - "testing"
+      - "test"
+      - "AI"
+      - "accessibility"
+      - "visual"
+    exclude_keywords:
+      - "newsletter"
+      - "award"
+      - "G2"
+      - "meetup"
+      - "discord"
+      - "speaker"
+      - "webinar"
+      - "summit"
+      - "hiring"
+
+  - name: "Maestro 官方博客"
+    url: "https://maestro.dev/blog/rss.xml"
+    type: "rss"
+    priority: 3
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - "Maestro"
+      - "mobile"
+      - "UI testing"
+      - "E2E"
+      - "Flutter"
+      - "React Native"
+      - "Android"
+      - "iOS"
+      - "visual testing"
+    exclude_keywords:
+      - "security milestone"
+
+  - name: "QA Wolf 官方博客"
+    url: "https://www.qawolf.com/blog/rss.xml"
+    type: "rss"
+    priority: 3
+    dify_exploration: true
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - "AI testing"
+      - "E2E"
+      - "end-to-end"
+      - "cross-browser"
+      - "flaky"
+      - "parallel"
+      - "bug report"
+      - "smoke testing"
+      - "functional testing"
+    exclude_keywords:
+      - "webinar"
+      - "QAaaS"
+      - "QAAAS"
+      - "pricing"
+      - "demo"
+
+  - name: "MuukTest 官方博客"
+    url: "https://muuktest.com/blog/rss.xml"
+    type: "rss"
+    priority: 3
+    dify_exploration: true
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - "agentic qa"
+      - "AI"
+      - "testing"
+      - "QA"
+      - "quality assurance"
+      - "test environment"
+      - "regression"
+      - "automation"
+    exclude_keywords:
+      - "webinar"
+      - "podcast"
+      - "case study"
+      - "book a demo"
+      - "summit"
+
+  - name: "Qase 官方博客"
+    url: "https://qase.io/blog/rss/"
+    type: "rss"
+    priority: 3
+    dify_exploration: true
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - "test report"
+      - "quality engineering"
+      - "automated testing"
+      - "pytest"
+      - "Playwright"
+      - "Cypress"
+      - "profiler"
+      - "sleep"
+      - "smart waits"
+    exclude_title_patterns:
+      - '(?i)\bmeetup\b'
+      - '(?i)\bconference\b'
+    exclude_keywords:
+      - "meetup"
+      - "community"
+      - "conference"
+      - "pizza"
+
+  - name: "DevAssure 官方博客"
+    url: "https://www.devassure.io/blog/rss.xml"
+    type: "rss"
+    priority: 3
+    dify_exploration: true
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - "AI"
+      - "autonomous"
+      - "agentic"
+      - "MCP"
+      - "LLM"
+      - "Playwright"
+      - "visual regression"
+      - "test data"
+      - "API testing"
+      - "regression testing"
+    exclude_keywords:
+      - "webinar"
+      - "schedule demo"
+      - "book a demo"
+      - "case study"
+      - "white paper"
+
+  - name: "Gleb Bahmutov 博客"
+    url: "https://glebbahmutov.com/blog/atom.xml"
+    type: "rss"
+    priority: 3
+    dify_exploration: true
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - "Cypress"
+      - "Playwright"
+      - "E2E"
+      - "end-to-end"
+      - "test"
+      - "testing"
+      - "automation"
+    exclude_keywords:
+      - "course"
+      - "training"
+      - "sponsor"
+      - "workshop"
+
+  - name: "On Test Automation"
+    url: "https://www.ontestautomation.com/feed.xml"
+    type: "rss"
+    priority: 3
+    dify_exploration: true
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - "test automation"
+      - "REST Assured"
+      - "Playwright"
+      - "API"
+      - "testing"
+      - "Claude Code"
+    exclude_keywords:
+      - "career"
+      - "consulting"
+      - "mentoring"
+      - "speaking"
+      - "training"
+      - "workshop"
+
+  - name: "Martin Fowler"
+    url: "https://martinfowler.com/feed.atom"
+    type: "rss"
+    priority: 4
+    max_per_source: 1
+    time_window_hours: 720
+    exclude_title_patterns:
+      - '(?i)^fragments:'
+    require_keywords:
+      - "TDD"
+      - "test-driven"
+      - "feature flag"
+      - "rollback"
+      - "release safety"
+      - "test pyramid"
+      - "QA in production"
+
+  - name: "LaunchDarkly 官方博客"
+    url: "https://launchdarkly.com/blog/feed/"
+    type: "rss"
+    priority: 3
+    dify_exploration: true
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - "feature flag"
+      - "feature management"
+      - "rollout"
+      - "regression"
+      - "evaluation"
+      - "experimentation"
+      - "AI Config"
+      - "prompt"
+      - "A/B testing"
+    exclude_keywords:
+      - "Forrester"
+      - "ROI"
+      - "G2"
+      - "customer census"
+      - "navigation"
+      - "hiring"
+      - "recap"
+
+  - name: "PactFlow 官方博客"
+    url: "https://pactflow.io/blog/rss/"
+    type: "rss"
+    priority: 3
+    dify_exploration: true
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - "contract testing"
+      - "consumer"
+      - "provider"
+      - "verification"
+      - "OpenAPI"
+      - "test"
+      - "MCP"
+    exclude_keywords:
+      - "webinar"
+      - "summit"
+      - "register"
+
+  - name: "TestMu AI 官方博客"
+    url: "https://www.testmuai.com/blog/"
+    type: "testmu_blog_html"
+    priority: 4
+    dify_exploration: true
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - "AI"
+      - "automation"
+      - "testing"
+      - "Selenium"
+      - "Playwright"
+      - "Cypress"
+      - "Appium"
+      - "prompting"
+      - "UI testing"
+    exclude_keywords:
+      - "recap"
+      - "summit"
+      - "community"
+      - "webinar"
+      - "sponsor"
+
+  - name: "Sauce Labs 官方博客"
+    url: "https://saucelabs.com/_next/data/SOIlnxQ6jDGNkycOJ9NOz/resources/blog.json?type=blog"
+    type: "saucelabs_next_data_json"
+    priority: 4
+    dify_exploration: true
+    max_per_source: 1
+    time_window_hours: 720
+    link_prefix: "https://saucelabs.com/resources/blog"
+    require_keywords:
+      - "AI"
+      - "automation"
+      - "testing"
+      - "Playwright"
+      - "Selenium"
+      - "Appium"
+      - "mobile testing"
+      - "visual testing"
+      - "test authoring"
+    exclude_keywords:
+      - "webinar"
+      - "summit"
+      - "case study"
+      - "white paper"
+
+  - name: "Ministry of Testing - Test Automation"
+    url: "https://www.ministryoftesting.com/software-testing-news/list?feed=test-automation"
+    type: "mot_news_html"
+    priority: 4
+    dify_exploration: true
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - "AI Testing"
+      - "Playwright"
+      - "Cypress"
+      - "Claude Code"
+      - "E2E"
+      - "regression"
+      - "LLM"
+      - "quality"
+    exclude_keywords:
+      - "Polkadot"
+      - "career"
+      - "hiring"
+      - "sponsor"
+
+  - name: "Applitools Help Center"
+    url: "https://help.applitools.com/api/v2/help_center/en-us/sections/360001567572/articles.json"
+    type: "zendesk_help_center_api"
+    priority: 4
+    dify_exploration: true
+    max_per_source: 1
+    time_window_hours: 720
+    exclude_title_patterns:
+      - '(?i)migrat'
+      - '(?i)\bdeprecated\b'
+      - '(?i)\bnotice\b'
+    require_keywords:
+      - "visual testing"
+      - "visual test"
+      - "Playwright"
+      - "Selenium"
+      - "Cypress"
+      - "Appium"
+      - "Ultrafast Grid"
+      - "Eyes"
+      - "WebdriverIO"
+    exclude_keywords:
+      - "billing"
+      - "invoice"
+      - "payment"
+      - "privacy"
+      - "security policy"
+      - "moved"
+      - "migrated"
+      - "deprecated"
+
+  - name: "Postman API Pulse"
+    url: "https://community.postman.com/c/api-pulse/65.rss"
+    type: "rss"
+    priority: 4
+    dify_exploration: true
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - "API testing"
+      - "API test"
+      - "contract testing"
+      - "test script"
+      - "pre-request script"
+      - "collection runner"
+      - "schema validation"
+      - "mock server"
+      - "newman"
+      - "CI"
+    exclude_title_patterns:
+      - '(?i)community challenge'
+      - '(?i)24 hours only'
+      - '(?i)gift card'
+      - '(?i)^a new postman is here$'
+    exclude_keywords:
+      - "gift card"
+      - "contest"
+      - "winner"
+      - "ambassador"
+
+  # ======= 第四层：工程实践社区（保留少量补位，避免掘金刷屏）=======
+  - name: "掘金 - Playwright 与自动化测试"
+    keyword: "Playwright 自动化测试"
+    type: "juejin_api"
+    priority: 2
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - ["Playwright", "自动化"]
+      - ["Playwright", "自动化测试"]
+      - ["Playwright", "UI"]
+      - ["Playwright", "MCP"]
+    exclude_keywords:
+      - "面试"
+      - "招聘"
+      - "Cursor"
+      - "Trae"
+      - "Copilot"
+      - "提示词大全"
+      - "周报"
+      - "日报"
+
+  - name: "掘金 - AI赋能测试"
+    keyword: "AI 测试 自动化 MCP Agent"
+    type: "juejin_api"
+    priority: 3
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - ["AI", "测试"]
+      - ["智能测试", "测试"]
+      - ["MCP", "测试"]
+      - ["Claude Code", "测试"]
+      - ["LLM", "测试"]
+      - ["Function Calling", "测试"]
+      - ["Tool Calling", "测试"]
+    exclude_keywords:
+      - "面试"
+      - "招聘"
+      - "Prompt 大全"
+      - "提示词大全"
+      - "Cursor"
+      - "Trae"
+      - "Copilot"
+      - "周报"
+      - "日报"
+
+  - name: "掘金 - Claude Code 与测试Agent"
+    keyword: "Claude Code 测试 Agent"
+    type: "juejin_api"
+    priority: 3
+    dify_exploration: true
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - ["Claude Code", "测试"]
+      - ["MCP", "测试"]
+      - ["Agent", "测试"]
+      - ["自动化测试", "Claude Code"]
+    exclude_keywords:
+      - "面试"
+      - "招聘"
+      - "提示词大全"
+      - "模板"
+      - "教程"
+      - "指南"
+      - "安装"
+      - "使用方式"
+      - "使用技巧"
+      - "国内使用"
+      - "回不去了"
+      - "对手"
+      - "VSCode"
+      - "插件"
+      - "镜像"
+      - "白嫖"
+      - "Cursor"
+      - "Trae"
+      - "Copilot"
+      - "周报"
+      - "日报"
+
+  - name: "掘金 - Playwright MCP 与 Skill"
+    keyword: "Playwright MCP Skill 测试"
+    type: "juejin_api"
+    priority: 3
+    dify_exploration: true
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - ["Playwright", "自动化"]
+      - ["Playwright", "MCP"]
+      - ["Playwright", "测试"]
+      - ["MCP", "测试"]
+      - ["Skill", "测试"]
+    exclude_keywords:
+      - "面试"
+      - "招聘"
+      - "提示词大全"
+      - "最全"
+      - "指南"
+      - "教程"
+      - "Cursor"
+      - "Trae"
+      - "Copilot"
+      - "周报"
+      - "日报"
+
+  - name: "掘金 - AI 测试用例与脚本生成"
+    keyword: "AI 测试用例 脚本 生成"
+    type: "juejin_api"
+    priority: 3
+    dify_exploration: true
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - ["AI", "测试用例"]
+      - ["AI", "测试脚本"]
+      - ["测试用例", "生成"]
+      - ["测试脚本", "生成"]
+      - ["LLM", "测试用例"]
+      - ["自动化测试", "生成"]
+    exclude_keywords:
+      - "面试"
+      - "招聘"
+      - "提示词大全"
+      - "模板"
+      - "Cursor"
+      - "Trae"
+      - "Copilot"
+      - "周报"
+      - "日报"
+
+  - name: "掘金 - RAG 与 LLM 测试评测"
+    keyword: "RAG LLM 测试 评测"
+    type: "juejin_api"
+    priority: 3
+    max_per_source: 1
+    time_window_hours: 720
+    require_keywords:
+      - ["RAG", "评测"]
+      - ["LLM", "评测"]
+      - ["RAG", "测试"]
+      - ["LLM", "测试"]
+    exclude_keywords:
+      - "论文"
+      - "综述"
+      - "八股"
+      - "课程"
+      - "招聘"
+      - "面试"
+      - "周报"
+      - "日报"
+
+  # ======= 第五层：社区补位（低优先级补充新鲜度）=======
+  - name: "TesterHome 最新话题"
+    url: "https://testerhome.com/api/v3/topics.json?limit=20"
+    type: "testerhome_api"
+    priority: 3
+    max_per_source: 2
+    require_keywords:
+      - "测开"
+      - "测试开发"
+      - "自动化"
+      - "接口测试"
+      - "性能测试"
+      - "测试平台"
+      - "质量工程"
+      - "AI测试"
+      - "智能测试"
+      - "Appium"
+      - "Selenium"
+      - "Playwright"
+      - "JMeter"
+      - "Postman"
+      - "WireMock"
+      - "Airtest"
+      - "SoloPi"
+      - "混沌工程"
+      - "测试覆盖率"
+      - ["发布", "验证"]
+      - ["灰度", "验证"]
+      - ["缺陷", "定位"]
+      - ["根因", "分析"]
+    exclude_keywords:
+      - "失业"
+      - "求助"
+      - "小白"
+      - "前辈"
+      - "建议"
+      - "职业规划"
+      - "转行"
+      - "简历"
+      - "还有必要"
+      - "迷茫"
+      - "求推荐"
+    exclude_title_patterns:
+      - "失业"
+      - "求助"
+      - "小白"
+      - "前辈.*建议"
+      - "\\d+\\s*岁"
+      - "还有必要"
+
+filter:
+  time_window_hours: 48
+
+  # 白名单关键词：兼顾测试实践、官方工具更新与质量效能
+  keywords:
+    # === 测试核心 ===
+    - "测试"
+    - "测开"
+    - "测试开发"
+    - "自动化"
+    - "回归测试"
+    - "接口测试"
+    - "API测试"
+    - "契约测试"
+    - "UI自动化"
+    - "端到端测试"
+    - "E2E"
+    - "性能测试"
+    - "安全测试"
+    - "前端测试"
+    - "压测"
+    - "测试平台"
+    - "测试框架"
+    - "测试数据"
+    - "测试覆盖率"
+    - "Mock"
+    - "质量保障"
+    - "质量工程"
+    - "QA"
+    - "TestOps"
+    # === 官方工具与生态 ===
+    - "Playwright"
+    - "Cypress"
+    - "pytest"
+    - "Selenium"
+    - "Appium"
+    - "Robot Framework"
+    - "Cucumber"
+    - "Karate"
+    - "WebdriverIO"
+    - "Maestro"
+    - "Midscene"
+    - "Locust"
+    - "Gatling"
+    - "WireMock"
+    - "Airtest"
+    - "JMeter"
+    - "STF"
+    - "UiAutomator"
+    - "SoloPi"
+    - "MeterSphere"
+    - "Postman"
+    - "newman"
+    - "k6"
+    - "BDD"
+    - "MCP"
+    - "Claude Code"
+    - "LLM"
+    - "Function Calling"
+    - "Tool Calling"
+    # === 研效与 AI 测试 ===
+    - "研发效能"
+    - "效能度量"
+    - "质量效能"
+    - "持续集成"
+    - "持续交付"
+    - "CI/CD"
+    - "DevOps"
+    - "AI测试"
+    - "智能测试"
+    - "AI 赋能测试"
+    - "大模型测试"
+    - "混沌工程"
+    - "鸿蒙"
+
+  # 排除词：过滤掉求职、泛 AI 理论和明显偏题内容
+  exclude_keywords:
+    - "面试题"
+    - "面经"
+    - "大厂八股文"
+    - "求职互助"
+    - "内推"
+    - "求推荐"
+    - "怎么看"
+    - "迷茫"
+    - "转行"
+    - "股市"
+    - "医疗"
+    - "NER"
+    - "命名实体"
+    - "情感计算"
+    - "情感分析"
+    - "前端领域"
+    - "扩散模型"
+    - "论文解读"
+    - "刷题"
+    - "随笔"
+    - "生存策略"
+    - "都用的哪些"
+    - "大家都用哪些"
+    - "fake-plugin"
+    - "chore: release"
+
+  # 测试场景标签：用于在同分内容里优先保留更贴近测试工程师工作的条目
+  scenario_keywords:
+    接口自动化:
+      - "接口自动化"
+      - "接口测试"
+      - "API测试"
+      - "API testing"
+      - "验收测试"
+      - "REST Assured"
+      - "acceptance test"
+      - "acceptance tests"
+      - "契约测试"
+      - "contract testing"
+      - "consumer-driven contract"
+      - "PactFlow"
+      - "Postman"
+      - "newman"
+      - "Karate"
+      - "WireMock"
+    UI自动化:
+      - "Playwright"
+      - "Cypress"
+      - "Selenium"
+      - "Appium"
+      - "WebdriverIO"
+      - "Maestro"
+      - "Midscene"
+      - "Airtest"
+      - "UI自动化"
+      - "端到端测试"
+      - "E2E"
+      - "Applitools"
+      - "visual testing"
+      - "visual regression"
+      - "视觉回归"
+    测试平台:
+      - "测试平台"
+      - "质量平台"
+      - "平台化"
+      - "TestOps"
+      - "Qase"
+      - "MeterSphere"
+    测试数据:
+      - "造数"
+      - "自动造数"
+      - "Mock"
+      - "mock server"
+      - "mock data"
+      - "测试数据工厂"
+      - "测试数据生成"
+      - "测试数据构造"
+      - "数据构造"
+      - "数据准备"
+    性能工程:
+      - "性能测试"
+      - "压测"
+      - "k6"
+      - "Locust"
+      - "Gatling"
+      - "负载测试"
+    质量效能:
+      - "质量效能"
+      - "研发效能"
+      - "CI/CD"
+      - "持续集成"
+      - "持续交付"
+      - "DevOps"
+    测试策略:
+      - "TDD"
+      - "测试驱动开发"
+      - "测试方法论"
+      - "质量工程"
+      - "功能开关"
+      - "feature flag"
+      - "灰度发布"
+      - "回滚策略"
+      - "发布安全"
+      - "回归预防"
+      - "guarded rollout"
+      - "progressive delivery"
+      - "A/B testing"
+      - "experimentation"
+    AI赋能测试:
+      - "AI测试"
+      - "智能测试"
+      - "AI 赋能测试"
+      - "大模型测试"
+      - "Claude Code"
+      - "AI Agent"
+      - "测试 Agent"
+      - "AI 生成测试"
+      - "MCP"
+      - "Function Calling"
+      - "Tool Calling"
+      - "agentic testing"
+      - "agentic QA"
+      - "AI-assisted testing"
+      - "AI-driven testing"
+      - "autonomous testing"
+      - "LLM evaluation"
+      - ["MCP", "Skill"]
+      - ["LLM", "agent"]
+      - ["AI", "test case"]
+      - ["AI", "test script"]
+      - ["AI", "bug triage"]
+      - ["AI", "test impact analysis"]
+      - ["AI", "synthetic test data"]
+    AI生成用例:
+      - "AI生成用例"
+      - "智能用例生成"
+      - "AI 测试用例生成"
+      - ["AI", "test case generation"]
+      - ["AI", "test authoring"]
+      - ["AI", "test creation"]
+      - ["LLM", "test case"]
+    AI生成脚本:
+      - "AI生成脚本"
+      - "智能脚本生成"
+      - "AI 测试脚本生成"
+      - ["AI", "test script generation"]
+      - ["AI", "test script"]
+      - ["AI", "generated tests"]
+    AI辅助缺陷诊断:
+      - "AI辅助缺陷诊断"
+      - "智能缺陷诊断"
+      - ["AI", "bug triage"]
+      - ["AI", "defect triage"]
+      - ["AI", "root cause analysis"]
+      - ["AI", "failure analysis"]
+      - ["AI", "bug report"]
+    AI回归优化:
+      - "AI回归优化"
+      - "智能回归"
+      - ["AI", "test impact analysis"]
+      - ["AI", "regression selection"]
+      - ["AI", "test prioritization"]
+      - ["AI", "flaky"]
+      - "self-healing test"
+      - "self healing test"
+    AI测试数据:
+      - "AI测试数据"
+      - "智能测试数据"
+      - ["AI", "synthetic test data"]
+      - ["AI", "test data generation"]
+      - ["AI", "mock data"]
+      - ["LLM", "test data"]
+    LLM应用评测:
+      - "LLM应用评测"
+      - "大模型评测"
+      - "LLM evaluation"
+      - "model evaluation"
+      - "prompt evaluation"
+      - "agent evaluation"
+      - ["LLM", "benchmark"]
+      - ["RAG", "evaluation"]
+      - ["RAG", "test"]
+      - ["AI", "evals"]
+    测试框架:
+      - "pytest"
+      - "Robot Framework"
+      - "Cucumber"
+      - "测试框架"
+      - "回归测试"
+
+  # 这些场景最贴近“AI辅助测试落地”，在进入 Dify 和最终排序时优先保留
+  preferred_scenario_tags:
+    - "AI生成用例"
+    - "AI生成脚本"
+    - "AI辅助缺陷诊断"
+    - "AI回归优化"
+    - "AI测试数据"
+    - "LLM应用评测"
+    - "AI赋能测试"
+
+  # 全局每天最多推 10 篇精选
+  max_count: 10
+
+  # QA 线扩充信源后保留更大的候选池，最终再做质量排序
+  candidate_pool_multiplier: 5
+
+  # 候选阶段不限制单一信源条数，优先让高质量内容先进入后续排序
+  max_per_source: 0
+
+  # 正文补抓配置，用于提升测试相关性判断准确性
+  content_fetch_limit: 14
+  content_fetch_concurrency: 4
+  full_content_max_chars: 3500
+
+  # 最终入选阶段不限制同一信源条数，但仍限制单一类别占比
+  max_per_source_final: 0
+  max_per_category_final: 2
+
+  # QA 资讯保持质量门槛，但适度放宽以提升高相关边缘内容的入选率
+  min_quality_score: 5
+
+  # 允许预发布版本标题进入候选，交由质量评分和最终排序决定去留
+  allow_prerelease_titles: true
+
+  # 进入 Dify 前只保留前 7 条高优先级候选，减少限流并避免弱内容耗掉摘要配额
+  dify_candidate_limit: 7
+
+  # Dify 预选阶段不限制同一信源条数，优先让高质量内容拿到摘要机会
+  dify_candidate_max_per_source: 0
+
+  # 激进模式：优先给新增接入信源预留 4 个摘要名额，提升其进入最终日报的概率
+  dify_exploration_slots: 4
+
+  # 若连续 2 条候选都命中 Dify 吞吐限流，则提前结束本轮摘要，避免整批候选都撞在限流窗口上
+  dify_rate_limit_abort_threshold: 2
+
+  # Dify 遇到吞吐限流时，处理下一条内容前额外等待秒数
+  dify_throttle_backoff_seconds: 6
+
+  # Dify 命中吞吐限流后，进入下一轮冷却重试前的等待时间
+  dify_rate_limit_cooldown_seconds: 18
+
+  # Dify 命中吞吐限流后，额外执行的冷却重试轮次
+  dify_rate_limit_retry_rounds: 1
+
+scheduler:
+  enabled: true
+  schedules:
+    - time: "09:00"

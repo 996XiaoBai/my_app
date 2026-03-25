@@ -1,0 +1,222 @@
+/* ========================================
+ * 设置页面样式 - 深色主题
+ * ======================================== */
+
+:root {
+    --bg-primary: #1a1b2e;
+    --bg-secondary: #232440;
+    --bg-card: rgba(255, 255, 255, 0.04);
+    --bg-input: rgba(255, 255, 255, 0.08);
+    --bg-hover: rgba(255, 255, 255, 0.12);
+    --text-primary: #e8e8f0;
+    --text-secondary: #9a9ab8;
+    --text-label: #b0b0cc;
+    --accent: #6c5ce7;
+    --accent-hover: #7c6ef7;
+    --accent-glow: rgba(108, 92, 231, 0.3);
+    --success: #00b894;
+    --error: #e17055;
+    --border: rgba(255, 255, 255, 0.1);
+    --radius: 10px;
+    --radius-sm: 6px;
+    --transition: 0.2s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.options-container {
+    width: 100%;
+    max-width: 560px;
+}
+
+header {
+    margin-bottom: 32px;
+}
+
+header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+/* 状态消息 */
+.status {
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    margin-bottom: 20px;
+    animation: slideDown 0.3s ease;
+}
+
+.status.success {
+    background: rgba(0, 184, 148, 0.15);
+    color: #55efc4;
+    border: 1px solid rgba(0, 184, 148, 0.3);
+}
+
+.status.error {
+    background: rgba(225, 112, 85, 0.15);
+    color: #fab1a0;
+    border: 1px solid rgba(225, 112, 85, 0.3);
+}
+
+.status.info {
+    background: rgba(108, 92, 231, 0.15);
+    color: #a29bfe;
+    border: 1px solid rgba(108, 92, 231, 0.3);
+}
+
+.hidden {
+    display: none !important;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* 配置段落 */
+.config-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.config-section h2 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+/* 表单 */
+.form-row {
+    display: flex;
+    gap: 12px;
+}
+
+.form-group {
+    margin-bottom: 14px;
+    width: 100%;
+}
+
+.form-group.half {
+    width: 50%;
+}
+
+label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-label);
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 9px 12px;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 13px;
+    font-family: inherit;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    outline: none;
+}
+
+input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.hint {
+    display: block;
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+    opacity: 0.7;
+}
+
+::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+/* 按钮 */
+.actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-primary {
+    flex: 1;
+    padding: 11px 20px;
+    background: linear-gradient(135deg, var(--accent), #5a4bdb);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--accent-hover), #6c5ce7);
+    box-shadow: 0 4px 15px var(--accent-glow);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    flex: 1;
+    padding: 11px 20px;
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all var(--transition);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}

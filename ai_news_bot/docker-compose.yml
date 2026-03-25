@@ -1,0 +1,14 @@
+services:
+  ai-news-bot:
+    build:
+      context: ../../
+      dockerfile: test_platform/ai_news_bot/Dockerfile
+    container_name: ai_news_bot
+    restart: unless-stopped
+    env_file:
+      - ../../.env
+    volumes:
+      - ./bot_data:/app/data
+      - ./:/app/test_platform/ai_news_bot
+    environment:
+      - TZ=Asia/Shanghai
